@@ -9,8 +9,4 @@ const api = axios.create({
   }
 })
 
-export const getBeersByCountry = (country: string) => {
-  return api.get(country);
-}
-
-export default api;
+export default api; 

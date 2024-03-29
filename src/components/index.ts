@@ -1,0 +1,1 @@
+export {default as BeerTable} from './BeerTable/BeerTable';
