@@ -1,4 +1,8 @@
+import { Table } from "antd";
+
 import { beerApi } from "@/resources/beer";
+
+import { columns } from "./columns";
 
 const BeerTable = () => {
   const { data, error, isPending } = beerApi.useList("italy");
@@ -13,7 +17,11 @@ const BeerTable = () => {
 
   console.log(data);
 
-  return <div>ku</div>;
+  return (
+    <>
+      <Table columns={columns} dataSource={data} rowKey="title" />
+    </>
+  );
 };
 
 export default BeerTable;
