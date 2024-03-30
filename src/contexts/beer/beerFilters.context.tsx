@@ -16,6 +16,8 @@ export const BeerFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
   const [search, setSearch] = useState("");
   const [alcohol, setAlcohol] = useState<AlcoholFilter>({});
 
+  console.log(alcohol);
+
   const value = {
     country,
     search,
