@@ -15,8 +15,6 @@ const BeerTable = () => {
     return <div>Error</div>;
   }
 
-  console.log(data);
-
   return (
     <>
       <Table columns={columns} dataSource={data} rowKey="title" />
