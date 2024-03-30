@@ -8,12 +8,30 @@ import { useBeerFiltersContext } from "@/contexts";
 import BeerTableFilters from "./Filters/BeerTableFilters";
 import { columns } from "./columns";
 
+import classes from "./BeerTable.module.css";
+import AdditionalInfoModal from "./AdditionalInfoModal/AdditionalInfoModal";
+
 const BeerTable = () => {
   const [beerList, setBeerList] = useState<Beer[] | undefined>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalRecord, setModalRecord] = useState<Beer | null>(null);
 
   const { search, alcohol, country } = useBeerFiltersContext();
 
   const { data, error, isPending } = beerApi.useList(country);
+
+  const onRow = (record: Beer) => {
+    return {
+      onClick: () => {
+        setModalRecord(record);
+        setIsModalVisible(true);
+      },
+    };
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  };
 
   useEffect(() => {
     if (!data) {
@@ -43,7 +61,23 @@ const BeerTable = () => {
       {error && <div>Error</div>}
 
       {beerList && (
-        <Table columns={columns} dataSource={beerList} rowKey="title" />
+        <>
+          <Table
+            columns={columns}
+            dataSource={beerList}
+            rowKey="title"
+            rowClassName={classes.row}
+            onRow={onRow}
+          />
+
+          {isModalVisible && Boolean(modalRecord) && (
+            <AdditionalInfoModal
+              record={modalRecord!}
+              isVisible={isModalVisible}
+              onClose={handleModalClose}
+            />
+          )}
+        </>
       )}
     </Flex>
   );
