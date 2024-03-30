@@ -31,8 +31,25 @@ const BeerTable = () => {
       });
     }
 
+    if (alcohol) {
+      filteredBeerList = filteredBeerList.filter((beer) => {
+        let isInBound = true;
+
+        if (alcohol.from) {
+          isInBound =
+            isInBound && Number.parseInt(beer.alchool) >= alcohol.from;
+        }
+
+        if (alcohol.to) {
+          isInBound = isInBound && Number.parseInt(beer.alchool) <= alcohol.to;
+        }
+
+        return isInBound;
+      });
+    }
+
     setBeerList(filteredBeerList);
-  }, [data, search]);
+  }, [data, search, alcohol]);
 
   return (
     <Flex vertical={true} gap={30}>
