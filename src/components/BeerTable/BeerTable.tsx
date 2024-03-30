@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Flex, Table } from "antd";
 
+import { beerUtils } from "@/utils";
 import { Beer, beerApi } from "@/resources/beer";
 import { useBeerFiltersContext } from "@/contexts";
 
@@ -23,29 +24,11 @@ const BeerTable = () => {
     let filteredBeerList = [...data];
 
     if (search) {
-      filteredBeerList = filteredBeerList.filter((beer) => {
-        const isInTitle = beer.title.includes(search);
-        const isInDescription = beer.description.includes(search);
-
-        return isInTitle || isInDescription;
-      });
+      filteredBeerList = beerUtils.filterBySearch(search, filteredBeerList);
     }
 
     if (alcohol) {
-      filteredBeerList = filteredBeerList.filter((beer) => {
-        let isInBound = true;
-
-        if (alcohol.from) {
-          isInBound =
-            isInBound && Number.parseInt(beer.alchool) >= alcohol.from;
-        }
-
-        if (alcohol.to) {
-          isInBound = isInBound && Number.parseInt(beer.alchool) <= alcohol.to;
-        }
-
-        return isInBound;
-      });
+      filteredBeerList = beerUtils.filterByAlcohol(alcohol, filteredBeerList);
     }
 
     setBeerList(filteredBeerList);
