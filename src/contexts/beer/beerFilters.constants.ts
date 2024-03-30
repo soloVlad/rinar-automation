@@ -1,5 +1,7 @@
+import { Country } from "@/enums";
+
 export const InitialBeerFiltersState = {
-  country: "italy",
+  country: Country.ITALY,
 
   setCountry: () => {},
   setSearch: () => {},

@@ -1,5 +1,7 @@
 import { FC, PropsWithChildren, createContext, useState } from "react";
 
+import { Country } from "@/enums";
+
 import { AlcoholFilter, BeerFiltersCtx } from "./beerFilters.types";
 import { InitialBeerFiltersState } from "./beerFilters.constants";
 
@@ -8,7 +10,9 @@ export const BeerFiltersContext = createContext<BeerFiltersCtx>(
 );
 
 export const BeerFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [country, setCountry] = useState(InitialBeerFiltersState.country);
+  const [country, setCountry] = useState<Country>(
+    InitialBeerFiltersState.country
+  );
   const [search, setSearch] = useState("");
   const [alcohol, setAlcohol] = useState<AlcoholFilter>({});
 

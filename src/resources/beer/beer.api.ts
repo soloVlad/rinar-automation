@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 
 import api from "@/api";
 
+import { Country } from "@/enums";
+
 import { Beer } from "./beer.types";
 
-export const useList = (country ?:string) => {
+export const useList = (country ?:Country) => {
   const fetchBeer = () => {
     const countryString = country ? `/${country}` : '';
 

@@ -1,24 +1,28 @@
-import { Table } from "antd";
+import { Flex, Table } from "antd";
 
 import { beerApi } from "@/resources/beer";
+import { useBeerFiltersContext } from "@/contexts";
 
+import BeerTableFilters from "./Filters/BeerTableFilters";
 import { columns } from "./columns";
 
 const BeerTable = () => {
-  const { data, error, isPending } = beerApi.useList("italy");
+  const { country } = useBeerFiltersContext();
 
-  if (isPending) {
-    return <div>Loading...</div>;
-  }
+  console.log(country);
 
-  if (error) {
-    return <div>Error</div>;
-  }
+  const { data, error, isPending } = beerApi.useList(country);
 
   return (
-    <>
-      <Table columns={columns} dataSource={data} rowKey="title" />
-    </>
+    <Flex vertical={true} gap={30}>
+      <BeerTableFilters />
+
+      {isPending && <div>Loading...</div>}
+
+      {error && <div>Error</div>}
+
+      {data && <Table columns={columns} dataSource={data} rowKey="title" />}
+    </Flex>
   );
 };
 

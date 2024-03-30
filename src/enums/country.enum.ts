@@ -1,0 +1,16 @@
+export enum Country {
+  DENMARK = "denmark",
+  SWEDEN = "sweden",
+  BELGIUM = "belgium",
+  SPAIN = "spain",
+  PORTUGAL = "portugal",
+  IRELAND = "ireland",
+  LUXEMBOURG = "luxembourg",
+  NORWAY = "norway",
+  FINLAND = "finland",
+  SWITZERLAND = "switzerland",
+  CZECH ="czech",
+  ITALY = "italy",
+  POLAND = "poland",
+  MALTA ="malta",
+}
