@@ -4,6 +4,8 @@ import debounce from "lodash.debounce";
 
 import { useBeerFiltersContext } from "@/contexts";
 
+import classes from "./AlcoholFilter.module.css";
+
 const AlcoholFilter: FC = () => {
   const { setAlcohol } = useBeerFiltersContext();
 
@@ -18,20 +20,24 @@ const AlcoholFilter: FC = () => {
   return (
     <Flex gap={12}>
       <InputNumber
+        className={classes.input}
         size="large"
         min={0}
         max={100}
         addonBefore="From"
         addonAfter="%"
+        controls={false}
         onChange={handleChangeFrom}
       />
 
       <InputNumber
+        className={classes.input}
         size="large"
         min={0}
         max={100}
         addonBefore="To"
         addonAfter="%"
+        controls={false}
         onChange={handleChangeTo}
       />
     </Flex>
