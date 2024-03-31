@@ -1,14 +1,18 @@
 import { FC, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Select } from "antd";
 import capitalize from "lodash.capitalize";
 
-import { useBeerFiltersContext } from "@/contexts";
+import { useAppDispatch } from "@/redux/store";
+import { selectCountry, setCountry } from "@/redux/slices/beer.slice";
+
 import { Country } from "@/enums";
 
 import classes from "./CountrySelect.module.css";
 
 const CountrySelect: FC = () => {
-  const { country, setCountry } = useBeerFiltersContext();
+  const dispatch = useAppDispatch();
+  const country = useSelector(selectCountry);
 
   const countries = useMemo(() => {
     return Object.values(Country).map((country) => ({
@@ -18,7 +22,7 @@ const CountrySelect: FC = () => {
   }, []);
 
   const handleCountryChange = (country: Country) => {
-    setCountry(country);
+    dispatch(setCountry(country));
   };
 
   return (

@@ -2,16 +2,17 @@ import { ChangeEvent, FC } from "react";
 import { Input } from "antd";
 import debounce from "lodash.debounce";
 
-import { useBeerFiltersContext } from "@/contexts";
+import { useAppDispatch } from "@/redux/store";
+import { setSearch } from "@/redux/slices/beer.slice";
 
 import classes from "./Search.module.css";
 
 const Search: FC = () => {
-  const { setSearch } = useBeerFiltersContext();
+  const dispatch = useAppDispatch();
 
   const handleSearchChange = debounce(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setSearch(event.target.value);
+      dispatch(setSearch(event.target.value));
     },
     300
   );

@@ -1,19 +1,16 @@
-import { QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
 
-import queryClient from "@/query-client";
+import { store } from "@/redux/store";
 
-import { BeerFiltersProvider } from "@/contexts";
 import { BeerTable } from "@/components";
 
 import "./App.css";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BeerFiltersProvider>
-        <BeerTable />
-      </BeerFiltersProvider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <BeerTable />
+    </Provider>
   );
 }
 

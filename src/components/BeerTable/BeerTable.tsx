@@ -1,24 +1,34 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Flex, Table } from "antd";
 
-import { beerUtils } from "@/utils";
-import { Beer, beerApi } from "@/resources/beer";
-import { useBeerFiltersContext } from "@/contexts";
+import { useAppDispatch } from "@/redux/store";
+import {
+  fetchBeerList,
+  selectBeerList,
+  selectCountry,
+  selectRequestStatus,
+} from "@/redux/slices/beer.slice";
+
+import { Beer } from "@/resources/beer";
+import { RequestStatus } from "@/enums";
 
 import BeerTableFilters from "./Filters/BeerTableFilters";
 import { columns } from "./columns";
 
-import classes from "./BeerTable.module.css";
 import AdditionalInfoModal from "./AdditionalInfoModal/AdditionalInfoModal";
 
+import classes from "./BeerTable.module.css";
+
 const BeerTable = () => {
-  const [beerList, setBeerList] = useState<Beer[] | undefined>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalRecord, setModalRecord] = useState<Beer | null>(null);
 
-  const { search, alcohol, country } = useBeerFiltersContext();
+  const dispatch = useAppDispatch();
 
-  const { data, error, isPending } = beerApi.useList(country);
+  const country = useSelector(selectCountry);
+  const beerList = useSelector(selectBeerList);
+  const requestStatus = useSelector(selectRequestStatus);
 
   const onRow = (record: Beer) => {
     return {
@@ -34,33 +44,18 @@ const BeerTable = () => {
   };
 
   useEffect(() => {
-    if (!data) {
-      setBeerList(data);
-      return;
-    }
-
-    let filteredBeerList = [...data];
-
-    if (search) {
-      filteredBeerList = beerUtils.filterBySearch(search, filteredBeerList);
-    }
-
-    if (alcohol) {
-      filteredBeerList = beerUtils.filterByAlcohol(alcohol, filteredBeerList);
-    }
-
-    setBeerList(filteredBeerList);
-  }, [data, search, alcohol]);
+    dispatch(fetchBeerList(country));
+  }, [country]);
 
   return (
     <Flex vertical={true} gap={30}>
       <BeerTableFilters />
 
-      {isPending && <div>Loading...</div>}
+      {requestStatus == RequestStatus.LOADING && <div>Loading...</div>}
 
-      {error && <div>Error</div>}
+      {requestStatus == RequestStatus.REJECTED && <div>Error</div>}
 
-      {beerList && (
+      {requestStatus == RequestStatus.SUCCESS && (
         <>
           <Table
             columns={columns}

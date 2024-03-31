@@ -2,19 +2,20 @@ import { FC } from "react";
 import { Flex, InputNumber } from "antd";
 import debounce from "lodash.debounce";
 
-import { useBeerFiltersContext } from "@/contexts";
+import { useAppDispatch } from "@/redux/store";
+import { setAlcohol } from "@/redux/slices/beer.slice";
 
 import classes from "./AlcoholFilter.module.css";
 
 const AlcoholFilter: FC = () => {
-  const { setAlcohol } = useBeerFiltersContext();
+  const dispatch = useAppDispatch();
 
   const handleChangeFrom = debounce((value: number | null) => {
-    setAlcohol((prevState) => ({ ...prevState, from: value ?? undefined }));
+    dispatch(setAlcohol({ from: value ?? undefined }));
   }, 300);
 
   const handleChangeTo = debounce((value: number | null) => {
-    setAlcohol((prevState) => ({ ...prevState, to: value ?? undefined }));
+    dispatch(setAlcohol({ to: value ?? undefined }));
   }, 300);
 
   return (
