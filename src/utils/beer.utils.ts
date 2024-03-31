@@ -1,23 +1,20 @@
-import { Beer } from "@/resources/beer";
-
-import { AlcoholFilter } from "@/contexts/beer/beerFilters.types";
+import { AlcoholFilter, Beer } from "@/resources/beer";
 
 export const filterBySearch = (search: string, beerList: Beer[]) => {
   return beerList.filter((beer) => {
-      const isInTitle = beer.title.includes(search);
-      const isInDescription = beer.description.includes(search);
+    const isInTitle = beer.title.includes(search);
+    const isInDescription = beer.description.includes(search);
 
-      return isInTitle || isInDescription;
-    });
-}
+    return isInTitle || isInDescription;
+  });
+};
 
 export const filterByAlcohol = (alcohol: AlcoholFilter, beerList: Beer[]) => {
   return beerList.filter((beer) => {
     let isInBound = true;
 
     if (alcohol.from) {
-      isInBound =
-        isInBound && Number.parseInt(beer.alchool) >= alcohol.from;
+      isInBound = isInBound && Number.parseInt(beer.alchool) >= alcohol.from;
     }
 
     if (alcohol.to) {
@@ -26,5 +23,4 @@ export const filterByAlcohol = (alcohol: AlcoholFilter, beerList: Beer[]) => {
 
     return isInBound;
   });
-}
-
+};

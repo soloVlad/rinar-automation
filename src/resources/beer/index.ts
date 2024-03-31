@@ -1,2 +1,1 @@
-export * as beerApi from './beer.api';
-export * from './beer.types';
+export * from "./beer.types";
