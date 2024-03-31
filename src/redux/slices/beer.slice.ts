@@ -42,12 +42,10 @@ const beerSlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
 
-      if (action.payload) {
-        state.filteredBeerList = beerUtils.filterBySearch(
-          action.payload,
-          state.filteredBeerList
-        );
-      }
+      state.filteredBeerList = beerUtils.filterBySearch(
+        action.payload,
+        state.fetchedBeerList
+      );
     },
     setCountry: (state, action) => {
       state.country = action.payload;
@@ -59,7 +57,7 @@ const beerSlice = createSlice({
       if (action.payload) {
         state.filteredBeerList = beerUtils.filterByAlcohol(
           newAlcohol,
-          state.filteredBeerList
+          state.fetchedBeerList
         );
       }
     },
@@ -77,12 +75,10 @@ const beerSlice = createSlice({
 
         let processingBeerList = [...action.payload];
 
-        if (state.search) {
-          processingBeerList = beerUtils.filterBySearch(
-            state.search,
-            processingBeerList
-          );
-        }
+        processingBeerList = beerUtils.filterBySearch(
+          state.search,
+          processingBeerList
+        );
 
         if (state.alcohol) {
           processingBeerList = beerUtils.filterByAlcohol(
