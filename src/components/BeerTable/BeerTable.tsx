@@ -51,29 +51,26 @@ const BeerTable = () => {
     <Flex vertical={true} gap={30}>
       <BeerTableFilters />
 
-      {requestStatus == RequestStatus.LOADING && <div>Loading...</div>}
-
       {requestStatus == RequestStatus.REJECTED && <div>Error</div>}
 
-      {requestStatus == RequestStatus.SUCCESS && (
-        <>
-          <Table
-            columns={columns}
-            dataSource={beerList}
-            rowKey="title"
-            rowClassName={classes.row}
-            onRow={onRow}
-          />
+      <>
+        <Table
+          columns={columns}
+          dataSource={beerList}
+          rowKey="title"
+          rowClassName={classes.row}
+          onRow={onRow}
+          loading={requestStatus === RequestStatus.LOADING}
+        />
 
-          {isModalVisible && Boolean(modalRecord) && (
-            <AdditionalInfoModal
-              record={modalRecord!}
-              isVisible={isModalVisible}
-              onClose={handleModalClose}
-            />
-          )}
-        </>
-      )}
+        {isModalVisible && Boolean(modalRecord) && (
+          <AdditionalInfoModal
+            record={modalRecord!}
+            isVisible={isModalVisible}
+            onClose={handleModalClose}
+          />
+        )}
+      </>
     </Flex>
   );
 };
